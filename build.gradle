@@ -81,8 +81,8 @@ bintray {
     publish = true
     pkg {
         repo = 'maven'
-        userOrg = 'basecrm'
-        name = 'basecrm-java'
+//        userOrg = 'basecrm'
+        name = 'base-crm-custom-client'
         desc = 'BaseCRM Official API V2 library client for Java'
         websiteUrl = 'https://github.com/basecrm/basecrm-java'
         issueTrackerUrl = 'https://github.com/basecrm/basecrm-java/issues'
