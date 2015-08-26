@@ -7,11 +7,11 @@ import com.getbase.serializer.Views;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import static com.getbase.utils.Precondition.*;
+import static com.getbase.utils.Precondition.checkNotNull;
 
 public class Lead {
   protected @JsonView(Views.ReadOnly.class) Long id;
@@ -19,6 +19,7 @@ public class Lead {
   protected @JsonView(Views.ReadOnly.class) DateTime createdAt;
   protected @JsonView(Views.ReadOnly.class) DateTime updatedAt;
   protected @JsonView(Views.ReadWrite.class) Long ownerId;
+  protected @JsonView(Views.ReadWrite.class) Long sourceId;
   protected @JsonView(Views.ReadWrite.class) Address address;
   protected @JsonView(Views.ReadWrite.class) String description;
   protected @JsonView(Views.ReadWrite.class) String email;
@@ -61,6 +62,8 @@ public class Lead {
   public Long getOwnerId() {
     return this.ownerId;
   }
+
+  public Long getSourceId() { return this.sourceId; }
 
   public Address getAddress() {
     return this.address;
@@ -140,6 +143,10 @@ public class Lead {
 
   public void setOwnerId(long ownerId) {
     this.ownerId = ownerId;
+  }
+
+  public void setSourceId(Long sourceId) {
+    this.sourceId = sourceId;
   }
 
   public void setAddress(Address address) {
@@ -223,30 +230,30 @@ public class Lead {
   @Override
   public String toString() {
     return "Lead{" +
-          "id=" + id + 
-          "creatorId=" + creatorId + 
-          "createdAt=" + createdAt + 
-          "updatedAt=" + updatedAt + 
-          "ownerId=" + ownerId + 
-          "address=" + address + 
-          "description='" + description + '\'' + 
-          "email='" + email + '\'' + 
-          "facebook='" + facebook + '\'' + 
-          "fax='" + fax + '\'' + 
-          "firstName='" + firstName + '\'' + 
-          "industry='" + industry + '\'' + 
-          "lastName='" + lastName + '\'' + 
-          "linkedin='" + linkedin + '\'' + 
-          "mobile='" + mobile + '\'' + 
-          "organizationName='" + organizationName + '\'' + 
-          "phone='" + phone + '\'' + 
-          "skype='" + skype + '\'' + 
-          "status='" + status + '\'' + 
-          "title='" + title + '\'' + 
-          "twitter='" + twitter + '\'' + 
-          "website='" + website + '\'' + 
-          "tags=" + tags + 
-          "customFields=" + customFields + 
+          "id=" + id +
+          "creatorId=" + creatorId +
+          "createdAt=" + createdAt +
+          "updatedAt=" + updatedAt +
+          "ownerId=" + ownerId +
+          "address=" + address +
+          "description='" + description + '\'' +
+          "email='" + email + '\'' +
+          "facebook='" + facebook + '\'' +
+          "fax='" + fax + '\'' +
+          "firstName='" + firstName + '\'' +
+          "industry='" + industry + '\'' +
+          "lastName='" + lastName + '\'' +
+          "linkedin='" + linkedin + '\'' +
+          "mobile='" + mobile + '\'' +
+          "organizationName='" + organizationName + '\'' +
+          "phone='" + phone + '\'' +
+          "skype='" + skype + '\'' +
+          "status='" + status + '\'' +
+          "title='" + title + '\'' +
+          "twitter='" + twitter + '\'' +
+          "website='" + website + '\'' +
+          "tags=" + tags +
+          "customFields=" + customFields +
           "}";
   }
 
