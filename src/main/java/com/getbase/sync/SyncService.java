@@ -90,7 +90,11 @@ public class SyncService extends BaseService {
                 buildHeaders(deviceUUID),
                 serialized);
 
-        return response.getHttpStatus() == 202;
+        boolean acked = response.getHttpStatus() == 202;
+        if (!acked) {
+            log.warn("Failed to ack with status {}", response.getHttpStatus());
+        }
+        return acked;
     }
 
     private Map<String, String> buildHeaders(String deviceUUID) {
