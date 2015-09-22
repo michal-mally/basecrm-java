@@ -6,12 +6,16 @@ import com.getbase.http.Response;
 import com.getbase.serializer.JsonDeserializer;
 import com.getbase.serializer.JsonSerializer;
 import com.getbase.services.BaseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
 import static com.getbase.utils.Precondition.*;
 
 public class SyncService extends BaseService {
+    private static final Logger log = LoggerFactory.getLogger(SyncService.class);
+
     public static final String DEVICE_HEADER = "X-Basecrm-Device-UUID";
 
     public SyncService(HttpClient httpClient) {
@@ -56,10 +60,15 @@ public class SyncService extends BaseService {
 
         // sanity check
         if (attributes == null || attributes.get("items") == null) {
-            return null;
+            log.warn("Items missing in response or empty body returned from sync. HTTP status: {}", response.getHttpStatus());
+            return Collections.emptyList();
         }
 
-        return (List<Map<String, Object>>)attributes.get("items");
+        final List<Map<String, Object>> items = (List<Map<String, Object>>) attributes.get("items");
+        if (items.isEmpty()) {
+            log.warn("Empty item collection returned from sync. HTTP status: {}", response.getHttpStatus());
+        }
+        return items;
     }
 
     public boolean ack(String deviceUUID, List<String> ackKeys) {
